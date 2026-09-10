@@ -9,7 +9,6 @@ import { useAuth } from '../context/AuthContext';
 const Login = () => {
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState('admin');
   const [credentials, setCredentials] = useState({
     userId: '',
     password: ''
@@ -18,11 +17,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleRoleChange = (newRole) => {
-    setRole(newRole);
-    // Removed auto-filling of credentials as requested
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,8 +24,7 @@ const Login = () => {
     try {
       const response = await api.post('/login', {
         userId: credentials.userId,
-        password: credentials.password,
-        role: role
+        password: credentials.password
       });
       
       const { token, user } = response.data;
@@ -165,23 +158,6 @@ const Login = () => {
                 <label htmlFor="remember" className="text-sm text-slate-600">Remember me</label>
               </div>
               <a href="#" className="text-sm font-semibold text-primary hover:text-primary-dark">Forgot password?</a>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 p-1 bg-slate-50 rounded-xl mb-6">
-              <button 
-                type="button"
-                onClick={() => handleRoleChange('admin')}
-                className={`py-2 rounded-lg text-sm font-bold transition-all ${role === 'admin' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                Admin
-              </button>
-              <button 
-                type="button"
-                onClick={() => handleRoleChange('employee')}
-                className={`py-2 rounded-lg text-sm font-bold transition-all ${role === 'employee' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                Employee
-              </button>
             </div>
 
             <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-lg disabled:opacity-50">

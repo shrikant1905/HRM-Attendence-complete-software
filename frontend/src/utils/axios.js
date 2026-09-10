@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://hrm-attendence-production.up.railway.app/api', // Live URL
+  baseURL: 'https://hrm-attendance-shrikant-backend-production.up.railway.app/api', // Live URL
   // baseURL: 'http://localhost:8081/api', // Local URL
   withCredentials: true,
   headers: {
